@@ -24,5 +24,4 @@ void	free_philo(t_philo *philo, pthread_mutex_t *forks)
 	}
 	free(philo);
 	free(forks);
-	printf("I'm free!!\n");
 }

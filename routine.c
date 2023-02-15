@@ -16,13 +16,14 @@ void	eat(t_philo *philo, long *tm)
 {
 	if (pthread_mutex_lock(philo->left_fork) != 0)
 		error("Error: locking left fork mutex\n");
-	printf("[%ld]: philo %d has taken the left fork🍴\n",
+	printf("\033[30m[%ld]: philo %d has taken the left fork🍴\033[0m\n",
 		get_time() - *tm, philo->index);
 	if (pthread_mutex_lock(philo->right_fork) != 0)
 		error("Error locking right fork mutex\n");
-	printf("[%ld]: philo %d has taken the right fork🍴\n",
+	printf("\033[30m[%ld]: philo %d has taken the right fork🍴\033[0m\n",
 		get_time() - *tm, philo->index);
-	printf("[%ld]: philo %d is eating🍝\n", get_time() - *tm, philo->index);
+	printf("\033[38;5;208m[%ld]: philo %d is eating🍝\033[0m\n",
+		get_time() - *tm, philo->index);
 	ft_usleep(philo->time_to_eat);
 	philo->eat_count++;
 	philo->last_eat = get_time();
@@ -30,10 +31,11 @@ void	eat(t_philo *philo, long *tm)
 		error("Error unlocking left fork mutex\n");
 	if (pthread_mutex_unlock(philo->right_fork) != 0)
 		error("Error unlocking right fork mutex\n");
-	printf("[%ld]: philo %d is sleeping😴\n",
+	printf("\033[34m[%ld]: philo %d is sleeping😴\033[0m\n",
 		get_time() - *tm, philo->index);
 	ft_usleep(philo->time_to_sleep);
-	printf("[%ld]: philo %d is thinking🤔\n", get_time() - *tm, philo->index);
+	printf("\033[32m[%ld]: philo %d is thinking🤔\033[0m\n",
+		get_time() - *tm, philo->index);
 }
 
 int	is_dead(t_philo *philo)
@@ -43,7 +45,7 @@ int	is_dead(t_philo *philo)
 	time = get_time();
 	if (time - philo->last_eat > philo->time_to_die)
 	{
-		printf("[%ld]: philo %d is dead😵\n",
+		printf("\033[1;31m[%ld]: philo %d is dead😵\033[0m\n",
 			time - philo->last_eat, philo->index);
 		return (1);
 	}
