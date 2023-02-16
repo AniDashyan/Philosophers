@@ -27,7 +27,7 @@ int	philo_work(t_philo *philo, pthread_mutex_t *forks)
 		i = -1;
 		while (++i < philo->number_of_philos)
 		{
-			if (is_dead(&philo[i]) == 1)
+			if (is_dead(&philo[i]) || stop_philos(philo))
 			{
 				free_philo(philo, forks);
 				return (1);

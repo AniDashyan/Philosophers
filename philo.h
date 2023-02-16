@@ -28,7 +28,6 @@ typedef struct s_philo
 	int					time_to_sleep;
 	int					number_of_times_each_philo_must_eat;
 	int					index;
-	int					eat_count;
 	long				last_eat;
 	long				start_time;
 	pthread_mutex_t		*left_fork;
@@ -52,5 +51,6 @@ void	ft_putstr_fd(char *s, int fd);
 int		ft_strlen(char *s);
 int		is_dead(t_philo *philo);
 void	free_philo(t_philo *philo, pthread_mutex_t *forks);
+int		stop_philos(t_philo *philo);
 
 #endif

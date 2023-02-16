@@ -16,17 +16,16 @@ void	eat(t_philo *philo, long *tm)
 {
 	if (pthread_mutex_lock(philo->left_fork) != 0)
 		error("Error: locking left fork mutex\n");
-	printf("\033[30m[%ld]: philo %d has taken the left fork🍴\033[0m\n",
+	printf("[%ld]: philo %d has taken the left fork🍴\n",
 		get_time() - *tm, philo->index);
 	if (pthread_mutex_lock(philo->right_fork) != 0)
 		error("Error locking right fork mutex\n");
-	printf("\033[30m[%ld]: philo %d has taken the right fork🍴\033[0m\n",
+	printf("[%ld]: philo %d has taken the right fork🍴\n",
 		get_time() - *tm, philo->index);
 	printf("\033[38;5;208m[%ld]: philo %d is eating🍝\033[0m\n",
 		get_time() - *tm, philo->index);
-	ft_usleep(philo->time_to_eat);
-	philo->eat_count++;
 	philo->last_eat = get_time();
+	ft_usleep(philo->time_to_eat);
 	if (pthread_mutex_unlock(philo->left_fork) != 0)
 		error("Error unlocking left fork mutex\n");
 	if (pthread_mutex_unlock(philo->right_fork) != 0)
@@ -52,6 +51,11 @@ int	is_dead(t_philo *philo)
 	return (0);
 }
 
+int	stop_philos(t_philo *philo)
+{
+	return (philo->number_of_times_each_philo_must_eat == 0);
+}
+
 void	*routine(t_philo *philo)
 {
 	long	time;
@@ -62,6 +66,8 @@ void	*routine(t_philo *philo)
 	while (1)
 	{
 		eat(philo, &time);
+		if (philo->number_of_times_each_philo_must_eat != -1)
+			philo->number_of_times_each_philo_must_eat--;
 	}
 	return (NULL);
 }

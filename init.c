@@ -52,7 +52,6 @@ void	init_philo(t_philo *philo, pthread_mutex_t *forks,
 	{
 		init_data(philo, argv, argc, &i);
 		philo[i].index = i + 1;
-		philo[i].eat_count = 0;
 		philo[i].last_eat = get_time();
 		philo[0].left_fork = &forks[philo->number_of_philos - 1];
 		philo[i].left_fork = &forks[i - 1];
@@ -65,20 +64,3 @@ void	init_philo(t_philo *philo, pthread_mutex_t *forks,
 			error("Error: Can't detach thread\n");
 	}
 }
-
-/* i = 0;
-while (i < philo->number_of_philos)
-{
-	if (i == philo->number_of_philos - 1)
-	{
-		if (philo[i].right_fork != philo[0].left_fork)
-			printf("false__\n");
-		else
-			printf("%p == %p\n", philo[i].right_fork, philo[0].left_fork);
-	}
-	else if (philo[i].right_fork != philo[i + 1].left_fork)
-		printf("false\n");
-	else
-		printf("%p == %p\n", philo[i].right_fork, philo[i + 1].left_fork);
-	i++;
-} */
